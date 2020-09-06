@@ -1,0 +1,50 @@
+{
+  "Level_1": [
+    {
+      "Name": "Морской боевой паек",
+      "Level": 1
+    }
+  ],
+  "Level_2": [
+    {
+      "Name": "Разноцветные бусы",
+      "Level": 2
+    }
+  ],
+  "Level_3": [
+    {
+      "Name": "Древние песочные часы",
+      "Level": 3
+    }
+  ],
+  "Level_4": [
+    {
+      "Name": "Старый сундук с золотыми монетами",
+      "Level": 4,
+      "ImageAddress": "https://bddatabase.net/items/new_icon/03_etc/10_free_tradeitem/00800018.png"
+    },
+    {
+      "Name": "Осколок аметиста",
+      "Level": 4
+    }
+  ],
+  "Level_5": [
+    {
+      "Name": "Синий кварц",
+      "Level": 5,
+      "ImageAddress": "https://bddatabase.net/items/new_icon/03_etc/10_free_tradeitem/00800019.png"
+    },
+    {
+      "Name": "Восьмигранный сундук",
+      "Level": 5
+    },
+    {
+      "Name": "Тридцатисемилетняя настойка",
+      "Level": 5
+    },
+    {
+      "Name": "Портрет древнего человека",
+      "Level": 5
+    }
+  ]
+}
