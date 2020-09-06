@@ -5,10 +5,10 @@ namespace Barter
 {
     public interface ITradeItemsDatabase
     {
-        IReadOnlyCollection<TradeItem> GetAllItems();
-
         int GetMass(TradeItemLevel level);
 
         int GetCost(TradeItemLevel level);
+
+        IReadOnlyCollection<TradeItem> GetAllItems(TradeItemLevel? level = null);
     }
 }

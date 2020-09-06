@@ -1,5 +1,8 @@
-﻿namespace Barter.Model
+﻿using System.Diagnostics;
+
+namespace Barter.Model
 {
+    [DebuggerDisplay("{Name}")]
     public class TradeItem
     {
         public string Name { get; set; }

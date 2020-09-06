@@ -10,6 +10,6 @@
         /// <summary>
         /// Грузоподъёмность корабля
         /// </summary>
-        public int MaxLT { get; set; }
+        public int MaxMass { get; set; }
     }
 }

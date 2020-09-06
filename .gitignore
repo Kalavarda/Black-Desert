@@ -2,3 +2,6 @@
 /Barter/bin
 /Barter/obj
 /Barter/*.user
+/Barter.Tests/bin
+/Barter.Tests/obj
+/packages
