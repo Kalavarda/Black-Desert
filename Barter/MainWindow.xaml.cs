@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Barter.Impl;
 using Barter.Model;
+using Microsoft.Win32;
 
 namespace Barter
 {
@@ -11,10 +13,33 @@ namespace Barter
         {
             InitializeComponent();
 
-            ITradeItemsDatabase itemsDatabase = new TradeItemsDatabase();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            while (string.IsNullOrWhiteSpace(Settings.Default.ItemsFileName) || !File.Exists(Settings.Default.ItemsFileName))
+            {
+                var fileDialog = new OpenFileDialog
+                {
+                    Title = "Укажите файл с данными",
+                    DefaultExt = ".json",
+                    Filter = "json|*.json|all files|*.*"
+                };
+                if (fileDialog.ShowDialog() == true)
+                    Settings.Default.ItemsFileName = fileDialog.FileName;
+            }
+            Settings.Default.Save();
+
+            Temp();
+        }
+
+        private static void Temp()
+        {
+            ITradeItemsDatabase itemsDatabase = new TradeItemsDatabase(Settings.Default.ItemsFileName);
             ISearchEngine searchEngine = new SearchEngine(itemsDatabase);
 
-            var ship = new Ship { Name = "Фрегат", MaxMass = 9200 };
+            var ship = new Ship {Name = "Фрегат", MaxMass = 9200};
 
             var exchange1 = new Exchange
             {
@@ -34,7 +59,7 @@ namespace Barter
             var voyage = new Voyage
             {
                 Ship = ship,
-                Exchanges = new [] { exchange1, exchange2 }
+                Exchanges = new[] {exchange1, exchange2}
             };
 
             var sourceMass = voyage.GetSourceMass(itemsDatabase);

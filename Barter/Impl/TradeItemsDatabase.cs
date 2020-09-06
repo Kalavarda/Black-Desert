@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Barter.Model;
 using Newtonsoft.Json;
 
@@ -72,11 +71,8 @@ namespace Barter.Impl
 */
         private TradeItem[] _all;
 
-        public TradeItemsDatabase()
+        public TradeItemsDatabase(string fileName)
         {
-            var fileName = new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName;
-            fileName = Path.Combine(fileName, "data.json");
-
             if (File.Exists(fileName))
                 _data = ItemsData.Load(fileName);
             else
