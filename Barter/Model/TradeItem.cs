@@ -2,7 +2,6 @@
 
 namespace Barter.Model
 {
-    [DebuggerDisplay("{Name}")]
     public class TradeItem
     {
         public string Name { get; set; }
@@ -10,6 +9,11 @@ namespace Barter.Model
         public TradeItemLevel Level { get; set; }
 
         public string ImageAddress { get; set; }
+
+        public override string ToString()
+        {
+            return $"[{(int)Level} ур.] {Name}";
+        }
     }
 
     public enum TradeItemLevel

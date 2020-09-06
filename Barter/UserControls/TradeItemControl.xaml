@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Barter.UserControls.TradeItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:userControls="clr-namespace:Barter.UserControls"
+             MinWidth="16" MinHeight="16" MaxWidth="128" MaxHeight="128">
+    <UserControl.Resources>
+        <userControls:TradeItemConverter x:Key="_tradeItemConverter"/>
+    </UserControl.Resources>
+    <Button Click="OnSelectClick">
+        <Image Source="{Binding Converter={StaticResource _tradeItemConverter}}"/>
+    </Button>
+</UserControl>

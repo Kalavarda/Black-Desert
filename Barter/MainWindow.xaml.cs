@@ -9,6 +9,9 @@ namespace Barter
 {
     public partial class MainWindow
     {
+        private ITradeItemsDatabase _itemsDatabase;
+        private ISearchEngine _searchEngine;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,28 +34,31 @@ namespace Barter
             }
             Settings.Default.Save();
 
+            _itemsDatabase = new TradeItemsDatabase(Settings.Default.ItemsFileName);
+            _searchEngine = new SearchEngine(_itemsDatabase);
+
             Temp();
+
+            _tradeItemControl.Search = s => _searchEngine.Search(s);
+            _tradeItemControl.TradeItem = _searchEngine.Search("Синий кварц").Single();
         }
 
-        private static void Temp()
+        private void Temp()
         {
-            ITradeItemsDatabase itemsDatabase = new TradeItemsDatabase(Settings.Default.ItemsFileName);
-            ISearchEngine searchEngine = new SearchEngine(itemsDatabase);
-
             var ship = new Ship {Name = "Фрегат", MaxMass = 9200};
 
             var exchange1 = new Exchange
             {
-                SourceItem = searchEngine.Search("Осколок аметиста").Single(),
+                SourceItem = _searchEngine.Search("Осколок аметиста").Single(),
                 Ratio = 1,
-                DestItem = searchEngine.Search("Восьмигранный сундук").Single(),
+                DestItem = _searchEngine.Search("Восьмигранный сундук").Single(),
                 Count = 4
             };
             var exchange2 = new Exchange
             {
-                SourceItem = searchEngine.Search("бусы").Single(),
+                SourceItem = _searchEngine.Search("бусы").Single(),
                 Ratio = 4,
-                DestItem = searchEngine.Search("часы").Single(),
+                DestItem = _searchEngine.Search("часы").Single(),
                 Count = 2
             };
 
@@ -62,16 +68,16 @@ namespace Barter
                 Exchanges = new[] {exchange1, exchange2}
             };
 
-            var sourceMass = voyage.GetSourceMass(itemsDatabase);
+            var sourceMass = voyage.GetSourceMass(_itemsDatabase);
             Debug.WriteLine(sourceMass);
 
-            var destMass = voyage.GetDestMass(itemsDatabase);
+            var destMass = voyage.GetDestMass(_itemsDatabase);
             Debug.WriteLine(destMass);
 
-            var warning = voyage.GetWarning(itemsDatabase);
+            var warning = voyage.GetWarning(_itemsDatabase);
             Debug.WriteLine(warning);
 
-            var error = voyage.GetError(itemsDatabase);
+            var error = voyage.GetError(_itemsDatabase);
             Debug.WriteLine(error);
         }
     }
