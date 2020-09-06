@@ -39,8 +39,10 @@ namespace Barter
 
             Temp();
 
-            _tradeItemControl.Search = s => _searchEngine.Search(s);
-            _tradeItemControl.TradeItem = _searchEngine.Search("Синий кварц").Single();
+            _exchangeControl.SearchEngine = _searchEngine;
+            _exchangeControl.TradeItemsDatabase = _itemsDatabase;
+            _exchangeControl.Exchange = new Exchange();
+            // _searchEngine.Search("Синий кварц").Single()
         }
 
         private void Temp()

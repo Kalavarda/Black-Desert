@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Barter.UserControls.ExchangeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:userControls="clr-namespace:Barter.UserControls">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <userControls:TradeItemControl x:Name="_source" HorizontalAlignment="Center" Width="32"/>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
+            <TextBox x:Name="_tbCount" MinWidth="16" TextChanged="OnTextChanged"/>
+        </StackPanel>
+        <userControls:TradeItemControl x:Name="_dest" Grid.Column="2" HorizontalAlignment="Center" Width="32"/>
+
+        <TextBox x:Name="_tbSourceCount" MinWidth="16" Grid.Row="1" HorizontalAlignment="Center" TextChanged="OnTextChanged"/>
+
+        <TextBox x:Name="_tbRatio" MinWidth="16" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" TextChanged="OnTextChanged"/>
+
+        <TextBlock x:Name="_tbSourceMass" Grid.Row="2"/>
+        <TextBlock x:Name="_tbDestMass" Grid.Row="2" Grid.Column="2"/>
+    </Grid>
+</UserControl>
