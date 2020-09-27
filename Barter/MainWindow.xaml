@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <userControls:ExchangeControl x:Name="_exchangeControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <userControls:VoyageControl x:Name="_voyageControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--<userControls:ExchangeControl x:Name="_exchangeControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
     </Grid>
 </Window>

@@ -74,6 +74,9 @@
     <Compile Include="..\Barter\ITradeItemsDatabase.cs">
       <Link>Links\ITradeItemsDatabase.cs</Link>
     </Compile>
+    <Compile Include="..\Barter\ITranslateService.cs">
+      <Link>Links\ITranslateService.cs</Link>
+    </Compile>
     <Compile Include="..\Barter\Model\Exchange.cs">
       <Link>Links\Exchange.cs</Link>
     </Compile>

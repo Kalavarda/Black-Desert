@@ -4,15 +4,73 @@ namespace Barter.Model
 {
     public class Exchange
     {
-        public TradeItem SourceItem { get; set; }
+        private TradeItem _sourceItem;
+        private TradeItem _destItem;
+        private int _ratio = 1;
+        private int _count = 1;
+        private int _sourceItemCount = 1;
 
-        public TradeItem DestItem { get; set; }
-        
-        public int Ratio { get; set; } = 1;
+        public TradeItem SourceItem
+        {
+            get => _sourceItem;
+            set
+            {
+                if (_sourceItem == value)
+                    return;
+                _sourceItem = value;
+                Changed?.Invoke(this);
+            }
+        }
 
-        public int Count { get; set; } = 1;
+        public TradeItem DestItem
+        {
+            get => _destItem;
+            set
+            {
+                if (_destItem == value)
+                    return;
+                _destItem = value;
+                Changed?.Invoke(this);
+            }
+        }
 
-        public int SourceItemCount { get; set; } = 1;
+        public int Ratio
+        {
+            get => _ratio;
+            set
+            {
+                if (_ratio == value)
+                    return;
+                _ratio = value;
+                Changed?.Invoke(this);
+            }
+        }
+
+        public int Count
+        {
+            get => _count;
+            set
+            {
+                if (_count == value)
+                    return;
+                _count = value;
+                Changed?.Invoke(this);
+            }
+        }
+
+        public int SourceItemCount
+        {
+            get => _sourceItemCount;
+            set
+            {
+                if (_sourceItemCount == value)
+                    return;
+                _sourceItemCount = value;
+                Changed?.Invoke(this);
+            }
+        }
+
+        public event Action<Exchange> Changed;
     }
 
     public static class ExchangeExtensions

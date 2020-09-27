@@ -13,11 +13,13 @@ namespace Barter.Impl
         private static readonly TradeItem[] EmptySeaarchResult = new TradeItem[0];
 
         private readonly ITradeItemsDatabase _tradeItemsDatabase;
-        private static readonly char[] Space = new []{' '};
+        private readonly ITranslateService _translateService;
+        private static readonly char[] Space = { ' ' };
 
-        public SearchEngine(ITradeItemsDatabase tradeItemsDatabase)
+        public SearchEngine(ITradeItemsDatabase tradeItemsDatabase, ITranslateService translateService)
         {
             _tradeItemsDatabase = tradeItemsDatabase ?? throw new ArgumentNullException(nameof(tradeItemsDatabase));
+            _translateService = translateService ?? throw new ArgumentNullException(nameof(translateService));
         }
 
         public IReadOnlyCollection<TradeItem> Search(string value, TradeItemLevel? level = null)
@@ -29,6 +31,15 @@ namespace Barter.Impl
 
             var result = new List<TradeItem>();
 
+            Search(value, items, result);
+            if (result.Count == 0)
+                Search(_translateService.ToAnotherKeyboardLayout(value), items, result);
+
+            return result;
+        }
+
+        private static void Search(string value, IEnumerable<TradeItem> items, ICollection<TradeItem> result)
+        {
             var words = value.ToLowerInvariant().Split(Space, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var item in items)
@@ -37,8 +48,6 @@ namespace Barter.Impl
                 if (words.All(word => itemWords.Any(w => w.Contains(word))))
                     result.Add(item);
             }
-
-            return result;
         }
     }
 }

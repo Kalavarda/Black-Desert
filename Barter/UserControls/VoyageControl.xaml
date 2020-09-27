@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Barter.UserControls.VoyageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:userControls="clr-namespace:Barter.UserControls"
+             MinWidth="100" MinHeight="100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Button Content="+" MinWidth="32" MinHeight="32" Margin="10" VerticalAlignment="Center" Click="OnAddClick"/>
+
+        <ScrollViewer Grid.Column="1">
+            <ItemsControl x:Name="_itemsControl">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5" Padding="2" BorderBrush="#80808080" BorderThickness="1">
+                            <userControls:ExchangeControl Loaded="ExchangeControl_OnLoaded"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <TextBlock x:Name="_tbSourceMass" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock x:Name="_tbDestMass" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right"/>
+    </Grid>
+</UserControl>

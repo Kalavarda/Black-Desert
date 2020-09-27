@@ -72,7 +72,7 @@ namespace Barter.UserControls
                 return _images[tradeItem.ImageAddress];
             }
 
-            throw new NotImplementedException();
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

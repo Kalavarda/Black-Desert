@@ -6,6 +6,7 @@ namespace Barter.UserControls
     public partial class ExchangeControl
     {
         private Exchange _exchange;
+        private static readonly TradeItem[] NoTradeItems = new TradeItem[0];
 
         public Exchange Exchange
         {
@@ -38,10 +39,6 @@ namespace Barter.UserControls
             }
         }
 
-        public ISearchEngine SearchEngine { get; set; }
-
-        public ITradeItemsDatabase TradeItemsDatabase { get; set; }
-
         public ExchangeControl()
         {
             InitializeComponent();
@@ -59,30 +56,31 @@ namespace Barter.UserControls
                 TuneControls();
             };
 
-            _source.Search = s =>
-            {
-                if (SearchEngine == null)
-                    return new TradeItem[0];
-                return SearchEngine.Search(s);
-            };
-            _dest.Search = s =>
-            {
-                if (SearchEngine == null)
-                    return new TradeItem[0];
-                return SearchEngine.Search(s);
-            };
+            _source.Search = s => App.SearchEngine == null
+                ? NoTradeItems
+                : App.SearchEngine.Search(s);
+            _dest.Search = s => App.SearchEngine == null
+                ? NoTradeItems
+                : App.SearchEngine.Search(s);
+
+            DataContextChanged += ExchangeControl_DataContextChanged;
+        }
+
+        private void ExchangeControl_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        {
+            Exchange = DataContext as Exchange;
         }
 
         private void TuneControls()
         {
-            if (Exchange != null && TradeItemsDatabase != null)
+            if (Exchange != null && App.TradeItemsDatabase != null)
             {
-                var sourceMass = Exchange.GetSourceMass(TradeItemsDatabase);
+                var sourceMass = Exchange.GetSourceMass(App.TradeItemsDatabase);
                 _tbSourceMass.Text = sourceMass != null
                     ? sourceMass.Value.ToString("### ### ###") + " LT"
                     : null;
 
-                var destMass = Exchange.GetDestMass(TradeItemsDatabase);
+                var destMass = Exchange.GetDestMass(App.TradeItemsDatabase);
                 _tbDestMass.Text = destMass != null
                     ? destMass.Value.ToString("### ### ###") + " LT"
                     : null;

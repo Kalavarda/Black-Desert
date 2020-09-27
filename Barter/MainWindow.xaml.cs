@@ -1,17 +1,9 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using Barter.Impl;
-using Barter.Model;
-using Microsoft.Win32;
+﻿using Barter.Model;
 
 namespace Barter
 {
     public partial class MainWindow
     {
-        private ITradeItemsDatabase _itemsDatabase;
-        private ISearchEngine _searchEngine;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -21,66 +13,10 @@ namespace Barter
 
         private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            while (string.IsNullOrWhiteSpace(Settings.Default.ItemsFileName) || !File.Exists(Settings.Default.ItemsFileName))
+            _voyageControl.Voyage = new Voyage
             {
-                var fileDialog = new OpenFileDialog
-                {
-                    Title = "Укажите файл с данными",
-                    DefaultExt = ".json",
-                    Filter = "json|*.json|all files|*.*"
-                };
-                if (fileDialog.ShowDialog() == true)
-                    Settings.Default.ItemsFileName = fileDialog.FileName;
-            }
-            Settings.Default.Save();
-
-            _itemsDatabase = new TradeItemsDatabase(Settings.Default.ItemsFileName);
-            _searchEngine = new SearchEngine(_itemsDatabase);
-
-            Temp();
-
-            _exchangeControl.SearchEngine = _searchEngine;
-            _exchangeControl.TradeItemsDatabase = _itemsDatabase;
-            _exchangeControl.Exchange = new Exchange();
-            // _searchEngine.Search("Синий кварц").Single()
-        }
-
-        private void Temp()
-        {
-            var ship = new Ship {Name = "Фрегат", MaxMass = 9200};
-
-            var exchange1 = new Exchange
-            {
-                SourceItem = _searchEngine.Search("Осколок аметиста").Single(),
-                Ratio = 1,
-                DestItem = _searchEngine.Search("Восьмигранный сундук").Single(),
-                Count = 4
+                Ship = App.Ship
             };
-            var exchange2 = new Exchange
-            {
-                SourceItem = _searchEngine.Search("бусы").Single(),
-                Ratio = 4,
-                DestItem = _searchEngine.Search("часы").Single(),
-                Count = 2
-            };
-
-            var voyage = new Voyage
-            {
-                Ship = ship,
-                Exchanges = new[] {exchange1, exchange2}
-            };
-
-            var sourceMass = voyage.GetSourceMass(_itemsDatabase);
-            Debug.WriteLine(sourceMass);
-
-            var destMass = voyage.GetDestMass(_itemsDatabase);
-            Debug.WriteLine(destMass);
-
-            var warning = voyage.GetWarning(_itemsDatabase);
-            Debug.WriteLine(warning);
-
-            var error = voyage.GetError(_itemsDatabase);
-            Debug.WriteLine(error);
         }
     }
 }

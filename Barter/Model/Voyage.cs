@@ -8,7 +8,17 @@ namespace Barter.Model
     {
         public Ship Ship { get; set; }
 
-        public IReadOnlyCollection<Exchange> Exchanges { get; set; }
+        public IReadOnlyCollection<Exchange> Exchanges { get; private set; } = new Exchange[0];
+
+        public event Action<Voyage, Exchange> ExchangeAdded;
+
+        public void Add(Exchange exchange)
+        {
+            if (exchange == null) throw new ArgumentNullException(nameof(exchange));
+
+            Exchanges = new List<Exchange>(Exchanges) { exchange }.ToArray();
+            ExchangeAdded?.Invoke(this, exchange);
+        }
     }
 
     public static class VoyageExtensions
